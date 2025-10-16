@@ -57,6 +57,12 @@ A real-time voting application designed for mutual support groups to make collab
 
 ## Deployment
 
+The app is deployed on Vercel and accessible at:
+- **Primary Domain**: https://aa-group-conscience.vercel.app
+- **Alternative Domains**: 
+  - https://aa-group-voting.vercel.app
+  - https://mutual-support-voting.vercel.app
+
 The app is configured for deployment on Vercel with automatic builds from the main branch.
 
 ## License

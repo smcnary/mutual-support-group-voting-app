@@ -14,9 +14,6 @@ const VoteList = ({ votes, onSelectVote, onCreateNew, voteStatus }) => {
       {votes.length === 0 ? (
         <div className="no-votes">
           <p>No group votes available yet.</p>
-          <button onClick={onCreateNew} className="create-first-vote">
-            Create Your First Group Vote
-          </button>
         </div>
       ) : (
         <div className="votes-grid">
