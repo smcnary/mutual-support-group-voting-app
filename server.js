@@ -2,19 +2,27 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
+const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.NODE_ENV === 'production' 
+      ? process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}` 
+        : true
+      : "http://localhost:3000",
     methods: ["GET", "POST"]
   }
 });
 
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Store votes in memory (in production, use a database)
 const votes = new Map();
@@ -149,6 +157,11 @@ app.post('/api/votes/:id/close', (req, res) => {
   res.json({ success: true, vote });
 });
 
+// Serve React app for all non-API routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
 // Cleanup expired votes (run every hour)
 setInterval(() => {
   const now = new Date();
@@ -180,7 +193,14 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 8000;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// For Vercel, we don't need to listen on a port
+// The server will be automatically handled by Vercel's serverless functions
+if (process.env.NODE_ENV !== 'production' || process.env.VERCEL !== '1') {
+  const PORT = process.env.PORT || 8000;
+  server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+// Export for Vercel
+module.exports = app;
