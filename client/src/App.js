@@ -90,7 +90,21 @@ function App() {
       });
       
       if (response.ok) {
+        const responseData = await response.json();
         console.log('Vote submitted successfully');
+        
+        // Update the selectedVote with the latest vote data
+        setSelectedVote(responseData.vote);
+        
+        // Update the votes list with the new data
+        setVotes(prevVotes => 
+          prevVotes.map(vote => 
+            vote.id === selectedVote.id 
+              ? responseData.vote
+              : vote
+          )
+        );
+        
         setVoteStatus(prev => ({
           ...prev,
           [selectedVote.id]: true
@@ -219,7 +233,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Mutual Support Group Voting App</h1>
+        <h1>Group Conscience Voting</h1>
         <p>Create votes on subjects and see real-time results</p>
         {currentView !== 'main' && (
           <button onClick={handleBackToMain} className="home-btn">
