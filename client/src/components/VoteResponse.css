@@ -1,0 +1,145 @@
+.vote-response {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.response-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #007bff;
+}
+
+.response-header h2 {
+  color: #333;
+  margin: 0;
+}
+
+.back-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.back-btn:hover {
+  background: #5a6268;
+}
+
+.vote-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.vote-option {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.vote-option:hover {
+  border-color: #007bff;
+  background: #f0f8ff;
+}
+
+.vote-option input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+}
+
+.vote-option input[type="radio"]:checked + .option-content {
+  color: #007bff;
+  font-weight: 600;
+}
+
+.vote-option:has(input[type="radio"]:checked) {
+  border-color: #007bff;
+  background: #f0f8ff;
+}
+
+.option-content {
+  flex: 1;
+}
+
+.option-text {
+  font-size: 16px;
+  color: #333;
+}
+
+.submit-vote {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.submit-vote:hover:not(:disabled) {
+  background: #218838;
+}
+
+.submit-vote:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.submission-success {
+  text-align: center;
+  padding: 40px;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  color: #155724;
+}
+
+.submission-success h2 {
+  color: #155724;
+  margin-bottom: 15px;
+}
+
+.submission-success p {
+  font-size: 18px;
+  margin: 0 0 30px 0;
+}
+
+.success-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.view-results-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.view-results-btn:hover {
+  background: #0056b3;
+}
