@@ -12,13 +12,11 @@ function App() {
   const [votes, setVotes] = useState([]);
   const [currentView, setCurrentView] = useState('main'); // 'main', 'votes', 'create-vote', 'vote-respond', 'vote-results'
   const [selectedVote, setSelectedVote] = useState(null);
-  const [socket, setSocket] = useState(null);
   const [voteStatus, setVoteStatus] = useState({});
 
   useEffect(() => {
     // Initialize socket connection
     const newSocket = io('http://localhost:8000');
-    setSocket(newSocket);
 
     // Listen for real-time vote updates
     newSocket.on('vote_update', (data) => {
