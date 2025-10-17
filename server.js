@@ -157,6 +157,25 @@ app.post('/api/votes/:id/close', (req, res) => {
   res.json({ success: true, vote });
 });
 
+// Delete a vote
+app.delete('/api/votes/:id', (req, res) => {
+  const vote = votes.get(req.params.id);
+  if (!vote) {
+    return res.status(404).json({ error: 'Vote not found' });
+  }
+  
+  // Remove vote from storage
+  votes.delete(req.params.id);
+  
+  // Remove associated user votes
+  userVotes.delete(req.params.id);
+  
+  // Emit real-time update to all clients
+  io.emit('vote_deleted', { voteId: req.params.id });
+  
+  res.json({ success: true, message: 'Vote deleted successfully' });
+});
+
 // Serve React app for all non-API routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
