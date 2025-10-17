@@ -45,12 +45,25 @@ function App() {
       );
     });
 
+    // Listen for vote deletion
+    newSocket.on('vote_deleted', (data) => {
+      setVotes(prevVotes => 
+        prevVotes.filter(vote => vote.id !== data.voteId)
+      );
+      // If currently viewing the deleted vote, go back to votes list
+      if (selectedVote && selectedVote.id === data.voteId) {
+        setCurrentView('votes');
+        setSelectedVote(null);
+      }
+    });
+
     // Load existing votes
     fetchVotes();
 
     return () => {
       newSocket.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchVotes = async () => {
@@ -132,6 +145,34 @@ function App() {
     }
   };
 
+  const deleteVote = async (voteId) => {
+    if (!window.confirm('Are you sure you want to delete this vote? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/votes/${voteId}`, {
+        method: 'DELETE',
+      });
+      
+      if (response.ok) {
+        console.log('Vote deleted successfully');
+        // The real-time update via socket will handle removing it from the list
+        // If we're viewing this vote, go back to votes list
+        if (selectedVote && selectedVote.id === voteId) {
+          setCurrentView('votes');
+          setSelectedVote(null);
+        }
+      } else {
+        const errorData = await response.json();
+        alert(errorData.error || 'Failed to delete vote');
+      }
+    } catch (error) {
+      console.error('Error deleting vote:', error);
+      alert('Failed to delete vote');
+    }
+  };
+
   const handleCreateNewVote = () => {
     setCurrentView('create-vote');
     setSelectedVote(null);
@@ -192,6 +233,7 @@ function App() {
             votes={votes}
             onSelectVote={handleSelectVote}
             onCreateNew={handleCreateNewVote}
+            onDeleteVote={deleteVote}
             voteStatus={voteStatus}
           />
         );
@@ -216,6 +258,7 @@ function App() {
           <VoteResults 
             vote={selectedVote}
             onBack={handleBackToVotes}
+            onDeleteVote={deleteVote}
           />
         );
       default:
