@@ -18,6 +18,11 @@
   margin: 0;
 }
 
+.results-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
 .back-btn {
   background: #6c757d;
   color: white;
@@ -30,6 +35,22 @@
 
 .back-btn:hover {
   background: #5a6268;
+}
+
+.delete-vote-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.delete-vote-btn:hover {
+  background: #c82333;
 }
 
 .voting-status {

@@ -1,7 +1,7 @@
 import React from 'react';
 import './VoteResults.css';
 
-const VoteResults = ({ vote, onBack }) => {
+const VoteResults = ({ vote, onBack, onDeleteVote }) => {
   const getPercentage = (count) => {
     if (vote.totalVotes === 0) return 0;
     return Math.round((count / vote.totalVotes) * 100);
@@ -27,9 +27,18 @@ const VoteResults = ({ vote, onBack }) => {
     <div className="vote-results">
       <div className="results-header">
         <h2>Vote Results: {vote.subject}</h2>
-        <button onClick={onBack} className="back-btn">
-          Back to Main
-        </button>
+        <div className="results-header-actions">
+          <button onClick={onBack} className="back-btn">
+            Back to Main
+          </button>
+          <button 
+            onClick={() => onDeleteVote(vote.id)} 
+            className="delete-vote-btn"
+            title="Delete this vote"
+          >
+            🗑️ Delete
+          </button>
+        </div>
       </div>
 
       <div className="voting-status">
