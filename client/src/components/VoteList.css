@@ -163,6 +163,12 @@
   opacity: 0.6;
 }
 
+.vote-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
 .take-vote-btn {
   background: #17a2b8;
   color: white;
@@ -172,8 +178,7 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
-  width: 100%;
-  margin-top: 15px;
+  flex: 1;
 }
 
 .take-vote-btn:hover {
@@ -186,4 +191,19 @@
 
 .take-vote-btn.view-results:hover {
   background: #5a32a3;
+}
+
+.delete-vote-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.3s ease;
+}
+
+.delete-vote-btn:hover {
+  background: #c82333;
 }

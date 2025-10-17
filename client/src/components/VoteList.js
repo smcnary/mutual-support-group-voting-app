@@ -1,7 +1,7 @@
 import React from 'react';
 import './VoteList.css';
 
-const VoteList = ({ votes, onSelectVote, onCreateNew, voteStatus }) => {
+const VoteList = ({ votes, onSelectVote, onCreateNew, onDeleteVote, voteStatus }) => {
   return (
     <div className="vote-list">
       <div className="vote-list-header">
@@ -53,13 +53,25 @@ const VoteList = ({ votes, onSelectVote, onCreateNew, voteStatus }) => {
                   <span className="status-badge voted">✓ Voted</span>
                 </div>
               )}
-              <button 
-                onClick={() => onSelectVote(vote)}
-                className={`take-vote-btn ${voteStatus[vote.id] ? 'view-results' : ''} ${!vote.isActive ? 'closed' : ''}`}
-                disabled={!vote.isActive && !voteStatus[vote.id]}
-              >
-                {!vote.isActive ? 'View Results' : voteStatus[vote.id] ? 'View Results' : 'Vote Now'}
-              </button>
+              <div className="vote-card-actions">
+                <button 
+                  onClick={() => onSelectVote(vote)}
+                  className={`take-vote-btn ${voteStatus[vote.id] ? 'view-results' : ''} ${!vote.isActive ? 'closed' : ''}`}
+                  disabled={!vote.isActive && !voteStatus[vote.id]}
+                >
+                  {!vote.isActive ? 'View Results' : voteStatus[vote.id] ? 'View Results' : 'Vote Now'}
+                </button>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDeleteVote(vote.id);
+                  }}
+                  className="delete-vote-btn"
+                  title="Delete this vote"
+                >
+                  🗑️
+                </button>
+              </div>
             </div>
           ))}
         </div>
