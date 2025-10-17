@@ -14,7 +14,14 @@ const VoteResults = ({ vote, onBack }) => {
     );
   };
 
-  const winner = getWinner();
+  // Check if the voting period has ended
+  const isVotingEnded = () => {
+    if (!vote.isActive) return true;
+    if (vote.expiresAt && new Date() > new Date(vote.expiresAt)) return true;
+    return false;
+  };
+
+  const winner = isVotingEnded() ? getWinner() : null;
 
   return (
     <div className="vote-results">
@@ -23,6 +30,20 @@ const VoteResults = ({ vote, onBack }) => {
         <button onClick={onBack} className="back-btn">
           Back to Main
         </button>
+      </div>
+
+      <div className="voting-status">
+        {isVotingEnded() ? (
+          <div className="status-message final">
+            🔴 Voting has ended - Final Results
+          </div>
+        ) : (
+          <div className="status-message active">
+            🟢 Voting is still active - Results may change
+            <br />
+            <small>Expires: {new Date(vote.expiresAt).toLocaleString()}</small>
+          </div>
+        )}
       </div>
 
       <div className="results-summary">
